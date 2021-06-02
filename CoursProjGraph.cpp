@@ -1,8 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
+int k1 = 0;
 
 void AllStar(vector<int> n, int k, int i)
 {
@@ -14,40 +15,51 @@ void AllStar(vector<int> n, int k, int i)
         {
             for (c = b + 1; c < k; ++c)
             {
-                cout << i + 1 << "  " << n[a] + 1 << "  " << n[b] + 1  << "  " << n[c] + 1 << endl;
+                cout << "The " << k << "th star of the graph will be" << "\n";
+                ++k1;
+                cout <<"V(1) = {" << i << "}   V(2) = { " << n[a] << ", " << n[b] << ", " << n[c] << "} \n"  << endl;
             }
         }
     }
+}
+
+int InsertNndes(int* a, int* b, int n)
+{
+    cin >> *a;
+    if (*a < 0)
+    {
+        return 0;
+    }
+    cin >> *b;
+    if (*b < 0)
+    {
+        return 0;
+    }
+    if ((*a >= n) || (*b >= n))
+    {
+        cout << "Wrong insert, try again \n";
+        InsertNndes(a, b, n);
+    }
+    return 1;
 }
 
 
 int main()
 {
     int n;
-    cout << "Nermucxeq gagatneri qanak@ \n";
+    cout << "Insert number of nodes \n";
     cin >> n;
 
     vector < vector <int> > Masiv(n, vector <int>(n));
     int a, b;
-    a = 1;
-    cout << "Nermucxeq grafi harevan gagatner@" << endl;
-    cin >> a;
-    cin >> b;
-    while (a)
+    cout << "Insert endpoints of each edge \n" << endl;
+    while (InsertNndes(&a, &b, n))
     {
-        /*if ((a > n) || (b > n))
-        {
-            cout << "Wrong insert, try again" << endl;
-            continue;
-        }*/
-        Masiv[a-1][b-1] = 1;
-        Masiv[b-1][a-1] = 1;
-        cin >> a;
-        if (a == -1)break;
-        cin >> b;
+        Masiv[a][b] = 1;
+        Masiv[b][a] = 1;
     }
     
-    cout << "Graf-i harevanutyan matric@ klini" << endl;
+    cout << "The adjacency matrix of graph \n" << endl;
     for (int i = 0; i < n; ++i)
     {
         for (int j = 0; j < n; ++j)
@@ -56,7 +68,6 @@ int main()
         }
         cout << "\n";
     }
-
     bool check = true;
     for (int i = 0; i < n; ++i)
     {
@@ -72,8 +83,7 @@ int main()
         }
         if (sum < 3) {}
         else
-        {
-            cout << "\n";        cout << "\n";
+        {      
             AllStar(tox, sum, i);
             check = false;
         }
